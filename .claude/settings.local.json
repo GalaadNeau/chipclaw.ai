@@ -4,7 +4,8 @@
       "Bash(grep -r middleware /c/Users/galaa/chipclaw.ai/my-app/node_modules/next/dist/docs/01-app/ --include=*.md -l)",
       "Bash(npm install:*)",
       "Bash(mkdir -p /c/Users/galaa/chipclaw.ai/my-app/app/sign-in/'[[...sign-in]]')",
-      "Bash(mkdir -p /c/Users/galaa/chipclaw.ai/my-app/app/sign-up/'[[...sign-up]]')"
+      "Bash(mkdir -p /c/Users/galaa/chipclaw.ai/my-app/app/sign-up/'[[...sign-up]]')",
+      "Bash(npx tsc:*)"
     ]
   }
 }

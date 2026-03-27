@@ -1,65 +1,99 @@
-import Image from "next/image";
+import Link from 'next/link'
+import ScrollDrivenHero from './_components/scroll-hero'
+import Navbar           from './_components/navbar'
+import ChipGrid         from './_components/chip-grid'
+
+const HOW_IT_WORKS = [
+  { step: '01', label: 'browse chips' },
+  { step: '02', label: 'download the .md' },
+  { step: '03', label: 'plug into your agent' },
+] as const
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="bg-black min-h-screen flex flex-col">
+
+      {/* ── SCROLL-DRIVEN FRAME SEQUENCE ────────────────────────── */}
+      <ScrollDrivenHero />
+
+      {/* ── NAVBAR — fades in during black interlude ────────────── */}
+      <Navbar />
+
+      {/* ── CATALOGUE ───────────────────────────────────────────── */}
+      <section className="py-28 px-6">
+        <div className="max-w-5xl mx-auto">
+
+          <div className="text-center mb-20">
+            <h2
+              className="text-6xl md:text-7xl font-normal text-white mb-5 lowercase leading-tight"
+              style={{ fontFamily: 'var(--font-instrument-serif)', fontStyle: 'italic' }}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              pick your chip.
+            </h2>
+            <p className="text-gray-400 text-base md:text-lg max-w-lg mx-auto leading-relaxed">
+              each chip is a <span className="font-mono text-gray-300">.md</span> file — drop it in your agent and unlock instant expertise.
+            </p>
+          </div>
+
+          <ChipGrid />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      </section>
+
+      {/* ── HOW IT WORKS ────────────────────────────────────────── */}
+      <section className="py-24 px-6 border-t border-white/5">
+        <div className="max-w-4xl mx-auto">
+
+          <h2
+            className="text-5xl md:text-6xl font-normal text-white mb-16 lowercase leading-tight text-center"
+            style={{ fontFamily: 'var(--font-instrument-serif)', fontStyle: 'italic' }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            how it works.
+          </h2>
+
+          <div className="flex flex-col md:flex-row gap-12 md:gap-0">
+            {HOW_IT_WORKS.map(({ step, label }, i) => (
+              <div key={step} className="flex-1 flex flex-col md:items-center md:text-center relative">
+                {i < HOW_IT_WORKS.length - 1 && (
+                  <div
+                    aria-hidden
+                    className="hidden md:block absolute top-4 left-[calc(50%+2rem)] right-0 h-px"
+                    style={{ background: 'linear-gradient(to right, rgba(251,191,36,0.2), transparent)' }}
+                  />
+                )}
+                <span className="text-amber-400 font-mono font-bold text-sm mb-3">{step}.</span>
+                <p className="text-gray-400 text-base lowercase">{label}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* ── CTA ─────────────────────────────────────────────────── */}
+      <section className="py-32 px-6 border-t border-white/5 text-center">
+        <div className="max-w-3xl mx-auto flex flex-col items-center gap-8">
+          <h2
+            className="text-5xl md:text-7xl font-normal text-white lowercase leading-tight"
+            style={{ fontFamily: 'var(--font-instrument-serif)', fontStyle: 'italic' }}
+          >
+            your agent deserves better.
+          </h2>
+          <Link
+            href="/chips"
+            className="px-8 py-3.5 rounded-xl font-semibold text-base bg-amber-400 text-black hover:bg-amber-300 transition-colors"
+          >
+            browse all chips
+          </Link>
+        </div>
+      </section>
+
+      {/* ── FOOTER ──────────────────────────────────────────────── */}
+      <footer className="border-t border-gray-900 py-8 px-6">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <span className="text-gray-600 text-sm">© 2026 Chiplaw</span>
+          <span className="text-gray-600 text-sm">built for claude, gpt &amp; cursor</span>
+        </div>
+      </footer>
+
     </div>
-  );
+  )
 }
