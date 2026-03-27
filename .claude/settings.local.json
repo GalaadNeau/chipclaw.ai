@@ -5,7 +5,10 @@
       "Bash(npm install:*)",
       "Bash(mkdir -p /c/Users/galaa/chipclaw.ai/my-app/app/sign-in/'[[...sign-in]]')",
       "Bash(mkdir -p /c/Users/galaa/chipclaw.ai/my-app/app/sign-up/'[[...sign-up]]')",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npx plugins:*)",
+      "Bash(claude --version)",
+      "Bash(claude plugin:*)"
     ]
   }
 }
