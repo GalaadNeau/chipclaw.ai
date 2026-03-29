@@ -58,13 +58,14 @@ type Chip = typeof CHIPS[number]
 function ChipCard({ chip }: { chip: Chip }) {
   return (
     <CardContainer containerClassName="w-full" className="w-full">
-      <CardBody
-        className="relative group/card w-full h-auto rounded-2xl p-6 flex flex-col gap-4"
+      <div
         style={{
-          background:   'rgba(255,255,255,0.025)',
-          border:       `1px solid ${chip.borderColor}`,
+          background: 'rgba(255,255,255,0.025)',
+          border:     `1px solid ${chip.borderColor}`,
         }}
+        className="rounded-2xl"
       >
+      <CardBody className="relative group/card w-full h-auto rounded-2xl p-6 flex flex-col gap-4">
         {/* Radial glow */}
         <div
           aria-hidden
@@ -128,6 +129,7 @@ function ChipCard({ chip }: { chip: Chip }) {
           </span>
         </CardItem>
       </CardBody>
+      </div>
     </CardContainer>
   )
 }
