@@ -54,12 +54,12 @@ export default function Navbar() {
           >
             sign in
           </Link>
-          <Link
-            href="/sign-up"
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent('waitlist:open'))}
             className="px-4 py-2 rounded-lg text-sm font-medium bg-amber-400 text-black hover:bg-amber-300 transition-colors"
           >
             get started
-          </Link>
+          </button>
         </div>
       </div>
     </header>

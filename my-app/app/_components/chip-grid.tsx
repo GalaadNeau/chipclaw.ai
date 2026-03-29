@@ -1,8 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import Link from 'next/link'
-import { useEffect, useRef } from 'react'
+import { CardBody, CardContainer, CardItem } from '@/components/ui/3d-card'
 
 // ── Chip data ────────────────────────────────────────────────────
 const CHIPS = [
@@ -57,66 +56,24 @@ type Chip = typeof CHIPS[number]
 
 // ── ChipCard ─────────────────────────────────────────────────────
 function ChipCard({ chip }: { chip: Chip }) {
-  const cardRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const el = cardRef.current
-    if (!el || window.matchMedia('(hover: none)').matches) return
-
-    const onMove = (e: MouseEvent) => {
-      const { left, top, width, height } = el.getBoundingClientRect()
-      const x = (e.clientX - left) / width  - 0.5  // -0.5 → 0.5
-      const y = (e.clientY - top)  / height - 0.5
-      el.style.transition = 'transform 0.12s ease-out'
-      el.style.transform  = `perspective(700px) rotateY(${x * 14}deg) rotateX(${-y * 10}deg) translateY(-8px) scale(1.015)`
-    }
-
-    const onLeave = () => {
-      el.style.transition = 'transform 0.5s ease'
-      el.style.transform  = ''
-    }
-
-    el.addEventListener('mousemove', onMove)
-    el.addEventListener('mouseleave', onLeave)
-    return () => {
-      el.removeEventListener('mousemove', onMove)
-      el.removeEventListener('mouseleave', onLeave)
-    }
-  }, [])
-
   return (
-    <div
-      ref={cardRef}
-      className="group relative rounded-2xl p-6 flex flex-col gap-5 cursor-pointer"
-      style={{
-        border:           `1px solid ${chip.borderColor}`,
-        background:       'rgba(255,255,255,0.025)',
-        transformStyle:   'preserve-3d',
-        willChange:       'transform',
-      }}
-    >
-      {/* Radial glow — follows chip accent colour */}
-      <div
-        aria-hidden
-        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-        style={{ background: `radial-gradient(ellipse 90% 70% at 50% 110%, ${chip.glowColor}, transparent)` }}
-      />
-
-      {/* Image */}
-      <div className="relative flex justify-center py-2">
-        <Image
-          src={chip.src}
-          alt={chip.name}
-          width={190}
-          height={250}
-          className="relative z-10 drop-shadow-2xl"
-          style={{ filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.5))' }}
+    <CardContainer containerClassName="w-full" className="w-full">
+      <CardBody
+        className="relative group/card w-full h-auto rounded-2xl p-6 flex flex-col gap-4"
+        style={{
+          background:   'rgba(255,255,255,0.025)',
+          border:       `1px solid ${chip.borderColor}`,
+        }}
+      >
+        {/* Radial glow */}
+        <div
+          aria-hidden
+          className="absolute inset-0 rounded-2xl opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 pointer-events-none"
+          style={{ background: `radial-gradient(ellipse 90% 70% at 50% 110%, ${chip.glowColor}, transparent)` }}
         />
-      </div>
 
-      {/* Content */}
-      <div className="relative z-10 flex flex-col gap-3">
-        <div className="flex items-center justify-between">
+        {/* Badge row */}
+        <CardItem translateZ={30} className="flex items-center">
           <span
             className="text-xs font-semibold tracking-widest px-2.5 py-1 rounded-full"
             style={{
@@ -127,26 +84,51 @@ function ChipCard({ chip }: { chip: Chip }) {
           >
             {chip.badge}
           </span>
-          <span className="text-amber-400 font-semibold text-sm">$4.99</span>
-        </div>
+        </CardItem>
 
-        <h3
+        {/* Image */}
+        <CardItem translateZ={80} className="w-full flex justify-center py-2 relative">
+          <Image
+            src={chip.src}
+            alt={chip.name}
+            width={190}
+            height={250}
+            className="drop-shadow-2xl"
+            style={{ filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.5))' }}
+          />
+          <div
+            aria-hidden
+            className="absolute bottom-0 left-0 right-0 h-1/2 pointer-events-none rounded-b-xl"
+            style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.4), transparent)' }}
+          />
+        </CardItem>
+
+        {/* Title */}
+        <CardItem
+          translateZ={50}
           className="text-white text-xl leading-snug"
           style={{ fontFamily: 'var(--font-instrument-serif)' }}
         >
           {chip.name}
-        </h3>
+        </CardItem>
 
-        <p className="text-gray-400 text-sm leading-relaxed">{chip.desc}</p>
-
-        <Link
-          href="/chips"
-          className="mt-1 w-full py-2.5 rounded-lg text-sm font-semibold text-center text-black bg-amber-400 hover:bg-amber-300 transition-colors"
+        {/* Description */}
+        <CardItem
+          as="p"
+          translateZ={40}
+          className="text-gray-400 text-sm leading-relaxed"
         >
-          Get chip →
-        </Link>
-      </div>
-    </div>
+          {chip.desc}
+        </CardItem>
+
+        {/* Coming soon */}
+        <CardItem translateZ={20} className="flex justify-center mt-1">
+          <span className="border border-white/20 text-gray-500 text-xs px-4 py-1.5 rounded-full">
+            coming soon
+          </span>
+        </CardItem>
+      </CardBody>
+    </CardContainer>
   )
 }
 
